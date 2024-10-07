@@ -8,3 +8,8 @@ jobs:
      run: echo "Hello All"
    - name: Print goodbyee
      run : echo "Bye Bye"
+ job2:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Run a one-line script 
+     run: echo "Hello World"
