@@ -1,4 +1,4 @@
-name: My first workflow with multiple jobs
+name: My first workflow with multi-line code
 on: workflow_dispatch     
 jobs:
  job1:
@@ -13,3 +13,12 @@ jobs:
   steps:
    - name: Run a one-line script 
      run: echo "Hello World"
+ buildJob:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Run a multi-line script 
+     run: |
+      hostname -s
+      echo "Compile code"
+      echo "maven test code"
+      echo "maven package code"
