@@ -1,8 +1,12 @@
 name: Dependent job execution
 on: 
- push: 
+ push:
   branches:
    - main
+ pull_request:
+  branches:
+   - main
+ 
 jobs:
  reviewJob:
   runs-on: ubuntu-latest
