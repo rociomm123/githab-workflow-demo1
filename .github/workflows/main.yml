@@ -6,10 +6,23 @@ on:
  pull_request:
   branches:
    - main
- 
 jobs:
  reviewJob:
   runs-on: ubuntu-latest
   steps:
    - name: Perform code review
      run: echo "pmd review..."
+ buildJob:
+  runs-on: ubuntu-latest
+  needs: reviewJob
+  steps:
+   - name: Checkout the Code
+     run: echo "clone the repo"
+   - name: Build the Code
+     run: echo "maven package command"
+ deployJob:
+  runs-on: ubuntu-latest
+  needs: [reviewJob,buildJob]
+  steps:
+   - name: Deploy the build code 
+     run: echo "deploy code..."
