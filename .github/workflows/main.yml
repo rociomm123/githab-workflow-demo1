@@ -1,15 +1,39 @@
-name: Conditional workflow 
-on: workflow_dispatch
+name: nodejs App Build 
+on: 
+ push:
+  branches:
+   - master
 jobs:
- job1:
+ lint-job1:
   runs-on: ubuntu-latest
   steps:
-   - name: generate a random number 
-     id: generator
-     run: echo "num=$RANDOM % 2"
-   - name: conditions 1
-     if: steps.generator.outputs.num == 0
-     run: echo zero
-   - name: conditions 2
-     if: steps.generator.outputs.num == 1
-     run: echo one
+    - name: Clone the repo
+      uses: actions/checkout@v4
+    - name: Install dependencies
+      run: npm ci
+    - name: Test code
+      run: npm run lint
+ test-job2:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Clone the repo
+     uses: actions/checkout@v4
+   - name: Install dependencies
+     run: npm ci
+   - name: Test code
+     run: npm run test
+   - name: Upload test report on github 
+     uses: actions/upload-artifact@v4
+     with:
+      name: test-report
+      path: test.json
+ build-job3:
+  needs: test-job2
+  runs-on: ubuntu-latest
+  steps:
+   - name: Clone the repo
+     uses: actions/checkout@v4
+   - name: Install dependencies
+     run: npm ci
+   - name: Build code
+     run: npm run build
